@@ -1,0 +1,32 @@
+{
+  "tasks": {
+    "dev": "deno run --watch=src,scripts --allow-run --allow-read=public --allow-net=127.0.0.1:3000 scripts/dev.ts",
+    "build": "deno bundle --platform browser --format iife --output .temp/bundle.js src/standalone.tsx && deno run --allow-run=git --allow-read=.temp,src,THIRD-PARTY-NOTICES.txt --allow-write=public scripts/build.ts",
+    "check": "deno check src/standalone.tsx scripts/build.ts scripts/dev.ts",
+    "test": "deno test tests/",
+    "fmt": "deno fmt src scripts tests deno.json"
+  },
+  "imports": {
+    "preact": "npm:preact@10.29.8",
+    "preact/hooks": "npm:preact@10.29.8/hooks",
+    "preact/jsx-runtime": "npm:preact@10.29.8/jsx-runtime"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "deno.ns"
+    ]
+  },
+  "nodeModulesDir": "none",
+  "exclude": [
+    "node_modules",
+    "public",
+    ".temp",
+    ".next",
+    ".vinext",
+    "dist"
+  ]
+}
