@@ -1,7 +1,7 @@
 import type { JSX } from "preact";
 import { useEffect, useId, useRef, useState } from "preact/hooks";
 import { cursorUrl } from "./cursors.ts";
-import { attachDrawing, type Mode } from "./drawing.ts";
+import { attachDrawing, markerColor, type Mode } from "./drawing.ts";
 import {
   Focus,
   Highlighter,
@@ -146,6 +146,7 @@ export default function Surface(
       : {}),
     "--brush-size": `${sizes[mode]}px`,
     "--brush-color": color,
+    "--brush-marker-color": markerColor(color),
   } as JSX.CSSProperties;
   return (
     <div

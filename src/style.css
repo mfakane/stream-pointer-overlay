@@ -811,7 +811,7 @@ footer {
   background: color-mix(in srgb,var(--brush-color) 25%,transparent);
 }
 .surface[data-mode=marker] .stream-pointer {
-  background: color-mix(in srgb,var(--brush-color) 30%,transparent);
+  background: color-mix(in srgb,var(--brush-marker-color) 40%,transparent);
 }
 .surface[data-mode=spotlight] .stream-pointer {
   box-shadow: 0 0 0 200vmax #0009;

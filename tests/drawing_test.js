@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 
 Deno.test("drawing interactions", async () => {
-  const { attachDrawing } = await import("../src/drawing.ts");
+  const { attachDrawing, markerColor } = await import("../src/drawing.ts");
   class Element extends EventTarget {
     children = [];
     attributes = {};
@@ -60,14 +60,16 @@ Deno.test("drawing interactions", async () => {
   fire("pointerup", 131, 91);
   assert.equal(host.captured, null);
   assert.match(layer.children[0].attributes.d, /L 20 30 L 30 40$/);
-  brush = { mode: "marker", size: 32, color: "#ffff00" };
+  brush = { mode: "marker", size: 32, color: "#bcf478" };
   fire("pointerdown");
   const marker = layer.children[1];
-  assert.equal(marker.attributes.opacity, ".3");
+  assert.equal(marker.attributes.stroke, markerColor(brush.color));
+  assert.notEqual(marker.attributes.stroke, brush.color);
+  assert.equal(marker.attributes.opacity, ".55");
   assert.equal(marker.attributes["stroke-width"], "32");
   fire("pointermove", 141, 91);
   assert.equal(layer.children.length, 2);
-  assert.equal(marker.attributes.opacity, ".3");
+  assert.equal(marker.attributes.opacity, ".55");
   fire("pointercancel");
   const canceled = marker.attributes.d;
   fire("pointermove", 181, 121);
@@ -94,6 +96,6 @@ Deno.test("drawing interactions", async () => {
   fire("pointerdown");
   assert.equal(layer.children.length, 0);
   console.log(
-    "PASS: pen geometry/width, single-stroke marker opacity, pointer capture and identity, cancel/blur, toolbar and non-drawing modes, right-click exclusion, clear and cleanup.",
+    "PASS: pen geometry/width, translucent fluorescent marker stroke, pointer capture and identity, cancel/blur, toolbar and non-drawing modes, right-click exclusion, clear and cleanup.",
   );
 });
